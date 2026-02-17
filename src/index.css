@@ -1,0 +1,224 @@
+/* Thème : Bleu #829795 + Bordeaux — moderne et lisible */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+:root {
+  /* Bleu #829795 : fond général + déclinaisons plus claires pour les composants */
+  --blue-base: #829795;
+  --blue-light-1: #9fadab;
+  --blue-light-2: #b8c4c2;
+  --blue-light-3: #c9d2d1;
+  --blue-light-4: #dce2e1;
+  --blue-light-5: #e8eceb;
+  --blue-light-6: #f0f3f2;
+  /* Dérivés plus foncés (boutons secondaires, bordures sur fond clair) */
+  --blue-200: #b8c4c2;
+  --blue-300: #9fadab;
+  --blue-400: #829795;
+  --blue-500: #6b7d7b;
+  --blue-600: #556463;
+
+  /* Bordeaux #4d282a et dérivés */
+  --bordeaux-50: #faf2f3;
+  --bordeaux-100: #f5e5e6;
+  --bordeaux-200: #e8c8cb;
+  --bordeaux-300: #d9a3a8;
+  --bordeaux-400: #c27077;
+  --bordeaux-500: #4d282a;
+  --bordeaux-600: #3f2123;
+  --bordeaux-700: #331a1c;
+  --bordeaux-800: #2a1517;
+
+  /* Sémantique */
+  --color-bg: var(--blue-base);
+  --color-surface: var(--blue-light-5);
+  --color-surface-alt: var(--blue-light-4);
+  --color-primary: var(--bordeaux-500);
+  --color-primary-hover: var(--bordeaux-600);
+  --color-primary-light: var(--bordeaux-100);
+  --color-accent: var(--blue-base);
+  --color-text: #1e293b;
+  --color-text-muted: #4a5564;
+  --color-border: var(--blue-light-3);
+  --color-error: #dc2626;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.2s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--bordeaux-700);
+  background: var(--blue-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+h1, h2, h3 {
+  color: var(--bordeaux-700);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Sur fond bordeaux (cartes) : écriture en bleu (couleur opposée) */
+.card h1, .card h2, .card h3 {
+  color: var(--blue-light-6);
+}
+.card, .card p, .welcome-box p {
+  color: var(--blue-light-5);
+}
+.card label {
+  color: var(--blue-light-4);
+}
+.card input, .card textarea,
+.post-composer input,
+.welcome-box input {
+  background: var(--bordeaux-50);
+  border-color: var(--bordeaux-200);
+  color: var(--bordeaux-800);
+}
+.card input::placeholder, .card textarea::placeholder,
+.post-composer input::placeholder {
+  color: var(--bordeaux-400);
+}
+.card input:focus, .card textarea:focus,
+.post-composer input:focus {
+  border-color: var(--bordeaux-200);
+  box-shadow: 0 0 0 3px var(--blue-light-3);
+}
+.card .alert-error {
+  background: var(--bordeaux-600);
+  border-left-color: var(--bordeaux-300);
+  color: var(--blue-light-5);
+}
+.card-meta {
+  color: var(--blue-light-4);
+}
+.card-meta a {
+  color: var(--blue-light-5);
+  font-weight: 600;
+}
+.card-meta a:hover {
+  color: var(--blue-light-6);
+}
+.card .btn-secondary {
+  background: var(--bordeaux-300);
+  color: var(--blue-light-6);
+}
+.card .btn-secondary:hover:not(:disabled) {
+  background: var(--bordeaux-200);
+  color: var(--blue-light-6);
+}
+/* Bouton principal dans les cartes : fond bleu (opposé), texte bordeaux */
+.card button:not(.btn-secondary),
+.post-composer button,
+.welcome-box button {
+  background: var(--blue-light-3);
+  color: var(--bordeaux-800);
+}
+.card button:not(.btn-secondary):hover:not(:disabled),
+.post-composer button:hover:not(:disabled),
+.welcome-box button:hover:not(:disabled) {
+  background: var(--blue-light-2);
+  color: var(--bordeaux-700);
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+button {
+  border-radius: var(--radius-sm);
+  border: none;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--color-primary);
+  color: var(--blue-light-6);
+  cursor: pointer;
+  transition: background var(--transition), transform 0.1s ease;
+  box-shadow: var(--shadow-sm);
+}
+button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  text-decoration: none;
+}
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+button.btn-secondary {
+  background: var(--blue-light-3);
+  color: var(--bordeaux-700);
+}
+button.btn-secondary:hover:not(:disabled) {
+  background: var(--blue-light-2);
+}
+
+input, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+  max-width: 100%;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--bordeaux-100);
+}
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 0.35rem;
+}
+
+.alert-error {
+  color: var(--color-error);
+  background: #fef2f2;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--color-error);
+  margin-bottom: 1rem;
+}
