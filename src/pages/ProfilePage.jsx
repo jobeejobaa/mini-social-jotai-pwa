@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSetAtom } from 'jotai';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { RESET } from 'jotai/utils';
 
 import { userAtom } from '../atoms/auth';
 import { API_URL } from '../config';
@@ -29,7 +30,15 @@ function ProfilePage() {
       try {
         const res = await fetch(`${API_URL}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
+          credentials: 'include',
         });
+        if (res.status === 401 || res.status === 404) {
+          // Session invalide (ex. serveur redémarré, données en mémoire perdues)
+          Cookies.remove('token');
+          setUser(RESET);
+          navigate('/login', { state: { message: 'Session expirée, veuillez vous reconnecter.' } });
+          return;
+        }
         if (!res.ok) throw new Error('Impossible de charger le profil');
         const data = await res.json();
         setProfile(data);
@@ -43,7 +52,7 @@ function ProfilePage() {
     };
 
     fetchProfile();
-  }, [token, navigate]);
+  }, [token, navigate, setUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

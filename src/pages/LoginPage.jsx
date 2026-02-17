@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function LoginPage() {
   const [identifier, setIdentifier] = useState(''); // email ou username
@@ -8,6 +8,14 @@ function LoginPage() {
   const [error, setError]           = useState('');
   const { login }                   = useAuth();
   const navigate                    = useNavigate();
+  const location                    = useLocation();
+
+  useEffect(() => {
+    if (location.state?.message) {
+      setError(location.state.message);
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state?.message, location.pathname, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

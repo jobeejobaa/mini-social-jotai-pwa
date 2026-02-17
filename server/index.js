@@ -94,7 +94,8 @@ app.post('/api/auth/local', async (req, res) => {
 // ——— Users ———
 app.get('/api/users/me', authMiddleware, (req, res) => {
   const user = findUserById(req.userId);
-  if (!user) return res.status(404).json({ error: { message: 'Utilisateur introuvable' } });
+  // Utilisateur absent (ex. serveur redémarré, données en mémoire perdues) → session invalide
+  if (!user) return res.status(401).json({ error: { message: 'Session expirée ou invalide' } });
   const { password: _, ...safe } = user;
   res.json(safe);
 });
@@ -153,14 +154,11 @@ app.post('/api/posts', authMiddleware, (req, res) => {
   const data = req.body?.data || req.body || {};
   const text = (data.text || '').trim();
   if (!text) return res.status(400).json({ error: { message: 'Texte requis' } });
-  const author = data.author ?? req.userId;
-  if (author !== req.userId) {
-    return res.status(403).json({ error: { message: 'Vous ne pouvez poster qu\'en votre nom' } });
-  }
+  // Toujours utiliser l'utilisateur du JWT comme auteur (évite 403 si types diffèrent côté client)
   const post = {
     id: nextPostId++,
     text,
-    author: Number(author),
+    author: Number(req.userId),
     like: 0,
     users_likes: [],
     createdAt: new Date().toISOString(),
